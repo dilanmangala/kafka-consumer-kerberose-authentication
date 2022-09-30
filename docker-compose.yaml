@@ -1,0 +1,25 @@
+version: "3.9"
+services:
+
+  dialog-kafka-service:
+    image: kafka-consumer:v0.0.1
+    ports:
+      - "8085:8081"
+    restart: always
+    environment:
+      KRB5_CONFIG : /appdata02/Docker/QA/kafka-consumer/configs/krb5.conf
+      TZ: "Asia/Colombo"
+      
+    extra_hosts:
+      - "cdhank1.dc.dialog.lk:10.48.148.44"
+      - "cdhank2.dc.dialog.lk:10.48.148.45"
+      - "cdhank3.dc.dialog.lk:10.48.148.46"
+      - "cdhank4.dc.dialog.lk:10.48.148.47"
+     
+    
+    volumes:  
+      - "/appdata02/Docker/QA/kafka-consumer/application.properties:/application.properties"
+      - "/appdata02/Docker/QA/kafka-consumer/krb5.conf:/krb5.conf"
+      - "/appdata02/Docker/QA/kafka-consumer/jaas.conf:/jaas.conf"
+      - "/appdata02/Docker/QA/kafka-consumer/Ezcash_Kafka_User.keytab:/Ezcash_Kafka_User.keytab"
+      - "/appdata02/Docker/QA/kafka-consumer/logs:/logs"

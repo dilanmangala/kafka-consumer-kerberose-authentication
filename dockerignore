@@ -1,0 +1,13 @@
+**/.classpath
+**/logs
+**/.git
+**/.project
+**/pom
+**/application-local.properties
+**/application-prod.properties
+**/application-qa.properties
+**/application-stg.properties
+**/application.properties
+**/.static
+**/.templates
+**/.gitignore
