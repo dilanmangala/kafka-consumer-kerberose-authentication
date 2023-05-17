@@ -1,25 +1,26 @@
 pipeline {
     agent any
     stages {
-        stage('Build') {
+        stage('git repo & clean') {
             steps {
-                sh 'mvn -f kafka-consumer/pom.xml -B -DskipTests clean package'
-            }
-            post {
-                success {
-                    echo "Now Archiving the Artifacts....."
-                    archiveArtifacts artifacts: '**/*.jar'
-                }
+               bat "rmdir  /s /q kafkaConsumer"
+                bat "git clone https://github.com/dilanmangala/kafka-consumer.git"
+                bat "mvn clean -f kafkaConsumer"
             }
         }
-        stage('Test') {
+        stage('install') {
             steps {
-                sh 'mvn -f kafka-consumer/pom.xml test'
+                bat "mvn install -f kafkaConsumer"
             }
-            post {
-                always {
-                    junit 'kafka-consumer/target/surefire-reports/*.xml'
-                }
+        }
+        stage('test') {
+            steps {
+                bat "mvn test -f kafkaConsumer"
+            }
+        }
+        stage('package') {
+            steps {
+                bat "mvn package -f kafkaConsumer"
             }
         }
     }
